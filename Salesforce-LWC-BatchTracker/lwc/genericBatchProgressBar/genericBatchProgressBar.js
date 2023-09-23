@@ -34,7 +34,7 @@ export default class GenericBatchProgressBar extends LightningElement {
             if (res[0]) {
                 this.totalBatch = res[0].TotalJobItems;
                 if(this.totalBatch != 0){
-                    if (res[0].TotalJobItems == res[0].JobItemsProcessed) {
+                    if (res[0]..Status == 'Completed') {
                         this.isBatchCompleted = true;
                         clearInterval(this._interval);
                     }
