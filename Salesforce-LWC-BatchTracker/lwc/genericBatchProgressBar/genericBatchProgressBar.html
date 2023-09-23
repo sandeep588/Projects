@@ -1,0 +1,31 @@
+<!--
+  @description       : 
+  @author            : Sandeep Kumar
+  @group             : 
+  @last modified on  : 09-24-2023
+  @last modified by  : Sandeep Kumar
+-->
+<template>
+    <div class="slds-p-top_large">
+        <template if:true={disableExecuteBatch}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- modal body start -->
+                    <div class="slds-modal__content slds-p-around_medium container" id="modal-content-id-1">
+                        <div class="slds-p-top_large">
+                            Batch Percentage Executed: <b><template if:true={executedPercentage}>{executedPercentage}%</template></b>
+                        </div>
+                        <lightning-progress-bar class="progressBar" value={executedIndicator}
+                            size="large"></lightning-progress-bar>
+                        <template if:true={isBatchCompleted}>
+                            <button class="buttonStyle" onclick={handleComplete}>Done</button>
+                        </template>
+                        
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </div>
+</template>

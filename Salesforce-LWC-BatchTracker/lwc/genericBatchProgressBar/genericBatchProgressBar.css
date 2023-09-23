@@ -1,0 +1,21 @@
+/**
+ * @author            : Sandeep Kumar
+ * @last modified on  : 09-24-2023
+ * @last modified by  : Sandeep Kumar
+**/
+.container{
+    text-align: center;
+    border-radius: 20px !important;
+    padding-top: 0px;
+}
+.buttonStyle{
+    background-color: #009cff;
+    color: white;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: medium;
+}
+.progressBar{
+    padding: 10px;
+}
