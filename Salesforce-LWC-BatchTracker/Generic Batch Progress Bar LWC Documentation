@@ -1,0 +1,60 @@
+Introduction:
+The Generic Batch Progress Bar Lightning Web Component (LWC) is a tool designed to track the progress of Batch Apex jobs within Salesforce. 
+It provides a real-time visualization of the progress and completion of a Batch Apex job, allowing users to monitor job execution effectively.
+
+Usage Syntax:
+html
+<template if:true={isBatchExecuted}>
+    <c-generic-batch-progress-bar batch-job-id={batchJobId}></c-generic-batch-progress-bar>
+</template>
+
+Explanation:
+<template if:true={isBatchExecuted}>:
+
+Conditional rendering based on the value of isBatchExecuted.
+Renders the c-generic-batch-progress-bar component when isBatchExecuted is true.
+<c-generic-batch-progress-bar>:
+
+The custom HTML tag representing the c-generic-batch-progress-bar component.
+batch-job-id={batchJobId}:
+
+Attribute to pass the Batch Apex job ID to the c-generic-batch-progress-bar component.
+Replace {batchJobId} with the actual Batch Apex job ID to track.
+
+How to Call:
+Set 'isBatchExecuted' to 'true' when you want to track a Batch Apex job and display the progress bar.
+
+Use the 'batch-job-id' attribute to pass the specific Batch Apex job ID to the 'c-generic-batch-progress-bar' component.
+
+*Guidelines*:
+1. Ensure Valid Batch Apex Job ID:
+
+2. Always provide a valid Batch Apex job ID to the c-generic-batch-progress-bar component.
+Conditional Rendering:
+
+3. Use the isBatchExecuted flag to conditionally render the progress bar for the Batch Apex job.
+Event Handling (Optional):
+
+4. Optionally handle the complete event for further actions upon Batch Apex job completion.
+
+Features and Benefits:
+1. Real-time Tracking:
+
+2. Monitor the progress of Batch Apex jobs in real-time.
+Automatic Display:
+
+3. The progress bar and completion button are automatically displayed based on the Batch Apex job's progress.
+
+4. Simplified Integration: Easily integrate this component as a child component within any UI for tracking Batch Apex jobs.
+
+5. Flexibility:Suitable for handling Batch Apex jobs from any UI source within the Salesforce environment.
+
+
+
+
+
+
+
+
+
+
