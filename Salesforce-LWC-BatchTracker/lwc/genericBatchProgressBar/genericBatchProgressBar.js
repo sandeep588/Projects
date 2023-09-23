@@ -22,7 +22,6 @@ export default class GenericBatchProgressBar extends LightningElement {
         if(this.batchJobId != undefined && this.batchJobId != null && this.initiated == false){
             this.disableExecuteBatch = true;
             this.initiated = true;
-            console.log('rendered');
             this.getBatchStatus();
             this.refreshBatchOnInterval();
         }
@@ -54,7 +53,6 @@ export default class GenericBatchProgressBar extends LightningElement {
     @track _interval;
     refreshBatchOnInterval() {
         this._interval = setInterval(() => {
-            console.log('interval');
             if (this.isBatchCompleted) {
                 clearInterval(this._interval);
                 
