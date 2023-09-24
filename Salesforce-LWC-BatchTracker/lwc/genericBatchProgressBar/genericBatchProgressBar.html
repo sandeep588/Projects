@@ -18,6 +18,13 @@
                         </div>
                         <lightning-progress-bar class="progressBar" value={executedIndicator}
                             size="large"></lightning-progress-bar>
+                        <template if:true={isBatchErrorAvailable}>
+                            <div class="slds-p-top_large">
+                                Batch Percentage Error: <b>{errorPercentage}%</b>
+                            </div>
+                            <lightning-progress-bar class="progressBar redbar" value={errorPercentage}
+                                size="large"></lightning-progress-bar>
+                        </template>
                         <template if:true={isBatchCompleted}>
                             <button class="buttonStyle" onclick={handleComplete}>Done</button>
                         </template>
