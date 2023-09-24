@@ -1,0 +1,6 @@
+.redbar .slds-progress-bar__value{
+    display: block;
+    background: red;
+    height: 100%;
+
+}
