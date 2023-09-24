@@ -7,6 +7,8 @@
 **/
 import { LightningElement, api, track } from 'lwc';
 import getJobDetails from '@salesforce/apex/genericBatchProgressBar.getJobDetails';
+import { loadStyle } from 'lightning/platformResourceLoader';
+import genericBatchProgressBarExtCss from '@salesforce/resourceUrl/genericBatchProgressBarExtCss';
 export default class GenericBatchProgressBar extends LightningElement {
     @api batchJobId;
     executedPercentage;
@@ -18,22 +20,35 @@ export default class GenericBatchProgressBar extends LightningElement {
     batchSize;
     disableExecuteBatch = false;
     initiated = false;
-    renderedCallback(){
-        if(this.batchJobId != undefined && this.batchJobId != null && this.initiated == false){
+    resourceLoaded = false;
+    isBatchErrorAvailable = false;
+    errorPercentage;
+    renderedCallback() {
+        if (this.batchJobId != undefined && this.batchJobId != null && this.initiated == false) {
             this.disableExecuteBatch = true;
             this.initiated = true;
             this.getBatchStatus();
             this.refreshBatchOnInterval();
         }
+        if (!this.resourceLoaded) {
+            Promise.all([
+                loadStyle(this, genericBatchProgressBarExtCss),
+            ])
+                .then(() => {
+                    this.resourceLoaded = true;
+                })
+                .catch(error => {
+                });
+        }
     }
     @track batchStatus
-    getBatchStatus(){
+    getBatchStatus() {
         getJobDetails({ jobId: this.batchJobId }).then(res => {
             this.batchStatus = res;
             if (res[0]) {
                 this.totalBatch = res[0].TotalJobItems;
-                if(this.totalBatch != 0){
-                    if (res[0]..Status == 'Completed') {
+                if (this.totalBatch != 0) {
+                    if (res[0].Status == 'Completed') {
                         this.isBatchCompleted = true;
                         clearInterval(this._interval);
                     }
@@ -41,12 +56,16 @@ export default class GenericBatchProgressBar extends LightningElement {
                     this.executedBatch = res[0].JobItemsProcessed;
                     var executedNumber = Number(this.executedPercentage);
                     this.executedIndicator = Math.floor(executedNumber);
-                }else{
+                    if (this.isBatchCompleted && res[0].NumberOfErrors > 0) {
+                        this.errorPercentage = ((res[0].NumberOfErrors / res[0].TotalJobItems) * 100).toFixed(2);
+                        this.errorPercentage = Math.floor(Number(this.errorPercentage));
+                        this.isBatchErrorAvailable = true;
+                    }
+                } else {
                     this.getBatchStatus();
                 }
             }
         }).catch(err => {
-            console.log('err ', err);
 
         })
     }
@@ -55,16 +74,16 @@ export default class GenericBatchProgressBar extends LightningElement {
         this._interval = setInterval(() => {
             if (this.isBatchCompleted) {
                 clearInterval(this._interval);
-                
-            }else{
+
+            } else {
                 this.getBatchStatus();
             }
         }, 2000); //refersh view every time
     }
-    handleComplete(){
+    handleComplete() {
         this.disableExecuteBatch = false;
-        this.dispatchEvent(new CustomEvent('complete',{
-            detail:this.batchStatus
+        this.dispatchEvent(new CustomEvent('complete', {
+            detail: this.batchStatus
         }))
     }
 }
